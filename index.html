@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XV Años - Ivanna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- DEFINICIÓN DE VARIABLES DE COLOR (TEMA ORIGINAL) --- */
+        /* --- VARIABLES DE COLOR --- */
         :root {
             --body-bg: #2c1b2e;
             --papel-bg: #f4e4bc;
             --lila-sobre-main: #462046;
             --lila-sobre-dark: #2e102e;
-            --dorado: #D4AF37; /* Color de acento metálico */
+            --dorado: #D4AF37;
             --lila-oscuro-texto: #5c2c5c;
             --lila-suave-fondo: #fbf0fc;
             --texto-base: #3e2723;
@@ -22,91 +24,68 @@
             --btn-gift-bg: #e10098;
         }
 
-        /* --- DEFINICIÓN DEL TEMA ALTERNATIVO "LILAC DREAM" --- */
-        /* Basado en la paleta de la imagen adjunta  */
+        /* --- TEMA ALTERNATIVO --- */
         body.theme-lilac {
-            --body-bg: #4B3853; /* Deep Aubergine  */
-            --papel-bg: #F4E8E8; /* Lavender Mist (Corregido visualmente)  */
-            --lila-sobre-main: #BC7890; /* Twilight Lilac  */
-            --lila-sobre-dark: #4B3853; /* Deep Aubergine  */
-            --dorado: #B59087; /* Rosewood Taupe (reemplaza al dorado)  */
-            --lila-oscuro-texto: #4B3853; /* Deep Aubergine  */
+            --body-bg: #4B3853; 
+            --papel-bg: #F4E8E8; 
+            --lila-sobre-main: #BC7890; 
+            --lila-sobre-dark: #4B3853; 
+            --dorado: #B59087; 
+            --lila-oscuro-texto: #4B3853; 
             --lila-suave-fondo: #ffffff;
-            --texto-base: #4B3853; /* Deep Aubergine  */
-            --texto-suave: #BC7890; /* Twilight Lilac  */
-            --alerta-bg: rgba(181, 144, 135, 0.2); /* Rosewood Taupe transparente */
-            --color-alerta: #BC7890; /* Twilight Lilac  */
-            --btn-gift-bg: #BC7890; /* Twilight Lilac  */
+            --texto-base: #4B3853; 
+            --texto-suave: #BC7890; 
+            --alerta-bg: rgba(181, 144, 135, 0.2);
+            --color-alerta: #BC7890; 
+            --btn-gift-bg: #BC7890; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--body-bg);
-            /* Patrón de fondo usando variable para el color */
             background-image: radial-gradient(var(--dorado) 1px, transparent 1px), radial-gradient(var(--dorado) 1px, transparent 1px);
             background-size: 50px 50px;
             background-position: 0 0, 25px 25px;
             font-family: 'Playfair Display', serif;
             overflow-x: hidden;
-            transition: background-color 0.5s ease; /* Transición suave de color */
+            transition: background-color 0.5s ease;
         }
 
-        /* --- BOTÓN CAMBIO DE TEMA --- */
-        #theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000; /* Por encima de todo, incluso el sobre */
-            background: var(--papel-bg);
-            border: 2px solid var(--dorado);
-            color: var(--lila-oscuro-texto);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
+        /* --- BOTONES FLOTANTES (TEMA Y MÚSICA) --- */
+        .floating-btn {
+            position: fixed; right: 20px; z-index: 10000;
+            background: var(--papel-bg); border: 2px solid var(--dorado); color: var(--lila-oscuro-texto);
+            width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;
         }
-        #theme-toggle:hover {
-            transform: scale(1.1);
-        }
+        .floating-btn:hover { transform: scale(1.1); }
+
+        #theme-toggle { top: 20px; }
+        #music-toggle { top: 70px; } /* Justo debajo del botón de tema */
 
         /* --- ESTILOS DEL SOBRE --- */
         #envelope-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 9999;
-            display: flex; flex-direction: column;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999; display: flex; flex-direction: column;
             transition: visibility 1.5s, opacity 1.5s;
         }
         .flap {
             width: 100%; height: 50vh;
-            /* Gradiente usando las nuevas variables */
             background: linear-gradient(135deg, var(--lila-sobre-main) 0%, var(--lila-sobre-dark) 100%);
-            position: relative;
-            transition: transform 1.5s cubic-bezier(0.6, 0.05, 0.28, 0.9);
-            z-index: 2;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            position: relative; transition: transform 1.5s cubic-bezier(0.6, 0.05, 0.28, 0.9);
+            z-index: 2; box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
         .flap.top { border-bottom: 2px solid var(--dorado); }
         .flap.bottom { border-top: 2px solid var(--dorado); }
         
         .seal-container {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10; cursor: pointer;
-            transition: opacity 0.5s;
-            text-align: center;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 10; cursor: pointer; transition: opacity 0.5s; text-align: center;
         }
-        /* Filtro sepia dinámico para el sello según el tema */
         .wax-seal { width: 130px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); animation: pulse 2s infinite; transition: filter 0.5s;}
         body.theme-lilac .wax-seal { filter: sepia(1) hue-rotate(320deg) saturate(0.8) drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
-
         .click-hint { color: var(--dorado); font-family: 'Cinzel', serif; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; text-shadow: 0 2px 4px black; }
 
         .envelope-open .flap.top { transform: translateY(-100%); }
@@ -114,31 +93,24 @@
         .envelope-open .seal-container { opacity: 0; pointer-events: none; }
         .envelope-open { pointer-events: none; }
 
-        /* --- CONTENIDO PRINCIPAL --- */
+        /* --- CONTENIDO --- */
         .invitation-content {
-            opacity: 0; transition: opacity 1.5s ease 1s;
-            padding: 20px 0; display: flex; justify-content: center;
+            opacity: 0; transition: opacity 1.5s ease 1s; padding: 20px 0; display: flex; justify-content: center;
         }
         .show-content { opacity: 1; }
 
         .old-paper {
             background-color: var(--papel-bg);
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
-            max-width: 500px; width: 95%;
-            padding: 0 0 40px 0;
-            box-shadow: 0 0 50px rgba(0,0,0,0.7);
-            border-radius: 8px;
-            position: relative;
-            outline: 4px double var(--dorado);
-            outline-offset: -12px;
-            overflow: hidden;
+            max-width: 500px; width: 95%; padding: 0 0 40px 0;
+            box-shadow: 0 0 50px rgba(0,0,0,0.7); border-radius: 8px; position: relative;
+            outline: 4px double var(--dorado); outline-offset: -12px; overflow: hidden;
             transition: background-color 0.5s ease, outline-color 0.5s ease;
         }
 
         .header-hero {
             position: relative; width: 100%; height: 350px; overflow: hidden;
-            border-bottom: 3px solid var(--dorado);
-            transition: border-color 0.5s ease;
+            border-bottom: 3px solid var(--dorado); transition: border-color 0.5s ease;
         }
         .header-hero img { width: 100%; height: 100%; object-fit: cover; filter: sepia(20%) contrast(110%); }
         .header-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, var(--papel-bg), transparent); height: 100px; transition: background 0.5s ease;}
@@ -158,20 +130,14 @@
         .time-val { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--lila-oscuro-texto); font-weight: bold; }
         .time-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- TARJETAS DE LUGAR --- */
         .location-card {
-            background: var(--lila-suave-fondo);
-            border: 1px solid var(--dorado);
-            border-radius: 10px;
-            margin: 25px 0;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            background: var(--lila-suave-fondo); border: 1px solid var(--dorado); border-radius: 10px;
+            margin: 25px 0; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: background-color 0.5s ease, border-color 0.5s ease;
         }
         .loc-img-container { height: 150px; overflow: hidden; position: relative; }
         .loc-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
         .location-card:hover .loc-img-container img { transform: scale(1.05); }
-        
         .loc-details { padding: 15px; text-align: center; }
         .loc-title { font-family: 'Cinzel', serif; color: var(--lila-oscuro-texto); font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
         .loc-time { color: var(--dorado); font-weight: bold; display: block; margin-bottom: 8px; }
@@ -184,69 +150,37 @@
         }
         .btn:hover { background-color: var(--dorado); transform: scale(1.05); }
         
-        /* Botón Liverpool */
         .btn-gift { 
-            background-color: var(--btn-gift-bg);
-            color: white; 
-            border: none;
-            box-shadow: 0 4px 10px rgba(0,0,0, 0.2);
-            margin-bottom: 15px;
+            background-color: var(--btn-gift-bg); color: white; border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0, 0.2); margin-bottom: 15px;
         }
         .btn-gift:hover { filter: brightness(1.1); transform: scale(1.05); }
 
-        /* --- ESTILO DESTACADO LLUVIA DE SOBRES --- */
         .envelope-highlight {
-            background-color: rgba(255, 255, 255, 0.6);
-            border: 2px dashed var(--dorado);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            position: relative;
+            background-color: rgba(255, 255, 255, 0.6); border: 2px dashed var(--dorado);
+            border-radius: 15px; padding: 20px; margin-top: 20px; position: relative;
             transition: border-color 0.5s ease;
         }
-        .envelope-icon {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 5px;
-            animation: floatEnvelope 3s ease-in-out infinite;
-        }
-        @keyframes floatEnvelope {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        /* RECORDATORIO FIJO (DEADLINE) */
+        .envelope-icon { font-size: 2.5rem; display: block; margin-bottom: 5px; animation: floatEnvelope 3s ease-in-out infinite; }
+        @keyframes floatEnvelope { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
         .deadline-box {
-            border: 2px solid var(--lila-oscuro-texto);
-            background-color: var(--alerta-bg);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 30px 0 10px 0;
-            text-align: center;
+            border: 2px solid var(--lila-oscuro-texto); background-color: var(--alerta-bg);
+            padding: 15px; border-radius: 8px; margin: 30px 0 10px 0; text-align: center;
             transition: all 0.5s ease;
         }
         .deadline-title {
-            color: var(--lila-oscuro-texto);
-            font-family: 'Cinzel', serif;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
+            color: var(--lila-oscuro-texto); font-family: 'Cinzel', serif; font-weight: bold;
+            text-transform: uppercase; font-size: 0.9rem; margin-bottom: 5px;
         }
         .deadline-date {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
-            color: var(--color-alerta);
-            line-height: 1.2;
+            font-family: 'Great Vibes', cursive; font-size: 2rem; color: var(--color-alerta); line-height: 1.2;
         }
 
         .dress-code { 
-            text-align: center; 
-            margin: 30px 0; 
-            padding: 20px; 
-            background: rgba(255,255,255,0.4); 
-            border-radius: 10px; 
-            border: 1px dashed var(--dorado); 
-            transition: border-color 0.5s ease;
+            text-align: center; margin: 30px 0; padding: 20px; 
+            background: rgba(255,255,255,0.4); border-radius: 10px; 
+            border: 1px dashed var(--dorado); transition: border-color 0.5s ease;
         }
         .dress-icon-img { width: 100px; max-width: 100%; height: auto; display: block; margin: 0 auto 10px auto; }
 
@@ -261,9 +195,7 @@
         .prev:hover, .next:hover { background-color: var(--dorado); }
 
         .sun-icon { width: 40px; opacity: 0.6; display: block; margin: 20px auto; }
-        /* Filtro para el sol y dresscode para que se adapten al tema */
         body.theme-lilac .sun-icon, body.theme-lilac .dress-icon-img { filter: sepia(1) hue-rotate(320deg) saturate(0.5); }
-
         .names-block { margin-bottom: 25px; text-align: center; }
 
         @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.05);} 100% {transform: scale(1);} }
@@ -271,9 +203,13 @@
 </head>
 <body>
 
-    <button id="theme-toggle" title="Cambiar Color de la Invitación">
-        🎨
-    </button>
+    <audio id="bg-music" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <button id="theme-toggle" class="floating-btn" title="Cambiar Tema">🎨</button>
+    <button id="music-toggle" class="floating-btn" title="Música">🔇</button>
 
     <div id="envelope-overlay">
         <div class="flap top"></div>
@@ -341,7 +277,7 @@
 
                 <div class="location-card">
                     <div class="loc-img-container">
-                        <img src="foto-iglesia.jpg" alt="Iglesia" onerror="this.src='https://images.unsplash.com/photo-1548625361-e8770b22a07c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                        <img src="foto-iglesia.jpg" loading="lazy" alt="Iglesia" onerror="this.src='https://images.unsplash.com/photo-1548625361-e8770b22a07c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                     </div>
                     <div class="loc-details">
                         <div class="loc-title">Ceremonia Religiosa</div>
@@ -353,7 +289,7 @@
 
                 <div class="location-card">
                     <div class="loc-img-container">
-                        <img src="foto-salon.jpg" alt="Salón" onerror="this.src='https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                        <img src="foto-salon.jpg" loading="lazy" alt="Salón" onerror="this.src='https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                     </div>
                     <div class="loc-details">
                         <div class="loc-title">Recepción y Baile</div>
@@ -373,16 +309,16 @@
                 <div class="subtitle">Momentos Mágicos</div>
                 <div class="carousel-container">
                     <div class="slide fade">
-                        <img src="foto-galeria-1.png" alt="Foto 1" onerror="this.src='https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                        <img src="foto-galeria-1.png" loading="lazy" alt="Foto 1" onerror="this.src='https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                     </div>
                     <div class="slide fade">
-                        <img src="foto-galeria-2.png" alt="Foto 2" onerror="this.src='https://images.unsplash.com/photo-1595966444923-a2a11b7b7501?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                        <img src="foto-galeria-2.png" loading="lazy" alt="Foto 2" onerror="this.src='https://images.unsplash.com/photo-1595966444923-a2a11b7b7501?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                     </div>
                     <div class="slide fade">
-                        <img src="foto-galeria-3.png" alt="Foto 3" onerror="this.src='https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                        <img src="foto-galeria-3.png" loading="lazy" alt="Foto 3" onerror="this.src='https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                     </div>
                     <div class="slide fade">
-                        <img src="foto-galeria-4.png" alt="Foto 3" onerror="this.src='https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                        <img src="foto-galeria-4.png" loading="lazy" alt="Foto 4" onerror="this.src='https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                     </div>
                     <a class="prev" onclick="plusSlides(-1)">❮</a>
                     <a class="next" onclick="plusSlides(1)">❯</a>
@@ -405,7 +341,7 @@
                         <div class="deadline-box">
                             <div class="deadline-title">⚠️ Importante ⚠️</div>
                             <p style="font-size: 0.9rem; margin-bottom: 5px;">Para asegurar su lugar en el Banquete Real, favor de confirmar antes del:</p>
-                            <div class="deadline-date">5 de Diciembre</div>
+                            <div class="deadline-date">10 de Diciembre</div>
                         </div>
 
                         <p style="font-weight: bold; margin-bottom: 10px; margin-top: 20px;">Confirmar Asistencia</p>
@@ -422,17 +358,50 @@
     </div>
 
     <script>
+        // VARIABLES GLOBALES
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-toggle');
+        let isMusicPlaying = false;
+
         function openEnvelope() {
             document.getElementById('envelope-overlay').classList.add('envelope-open');
             document.getElementById('invitation').classList.add('show-content');
+            
+            // Intentar reproducir música al abrir el sobre
+            playMusic();
         }
 
-        // LÓGICA PARA CAMBIAR EL TEMA
+        function playMusic() {
+            music.play().then(() => {
+                isMusicPlaying = true;
+                musicBtn.innerHTML = "🎵"; // Icono de sonando
+            }).catch(error => {
+                console.log("Autoplay bloqueado por el navegador hasta interacción del usuario");
+                isMusicPlaying = false;
+                musicBtn.innerHTML = "🔇"; // Icono de silencio
+            });
+        }
+
+        // CONTROLADOR DE MÚSICA
+        musicBtn.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                music.pause();
+                isMusicPlaying = false;
+                musicBtn.innerHTML = "🔇";
+            } else {
+                music.play();
+                isMusicPlaying = true;
+                musicBtn.innerHTML = "🎵";
+            }
+        });
+
+        // CAMBIO DE TEMA
         const themeToggleButton = document.getElementById('theme-toggle');
         themeToggleButton.addEventListener('click', () => {
             document.body.classList.toggle('theme-lilac');
         });
 
+        // CUENTA REGRESIVA
         const targetDate = new Date("December 20, 2025 17:00:00").getTime();
         const timer = setInterval(function() {
             const now = new Date().getTime();
@@ -452,6 +421,7 @@
             document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
         }, 1000);
 
+        // GALERÍA
         let slideIndex = 1;
         showSlides(slideIndex);
         function plusSlides(n) { showSlides(slideIndex += n); }
