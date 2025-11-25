@@ -302,7 +302,9 @@
                 <div class="dress-code">
                     <img src="dresscode.png" alt="Código de Vestimenta" class="dress-icon-img">
                     <div class="subtitle" style="margin-top:0;">Código de Vestimenta</div>
-                    <p style="font-size: 1.2rem; margin-top: 5px;">Formal</p>
+                    
+                    <p style="font-size: 1.2rem; margin-top: 5px;">Semi-formal</p>
+                    
                     <p style="font-size: 0.9rem; color: var(--texto-suave);">Rogamos etiqueta rigurosa para la corte real.</p>
                 </div>
 
@@ -341,7 +343,7 @@
                         <div class="deadline-box">
                             <div class="deadline-title">⚠️ Importante ⚠️</div>
                             <p style="font-size: 0.9rem; margin-bottom: 5px;">Para asegurar su lugar en el Banquete Real, favor de confirmar antes del:</p>
-                            <div class="deadline-date">5 de Diciembre</div>
+                            <div class="deadline-date">10 de Diciembre</div>
                         </div>
 
                         <p style="font-weight: bold; margin-bottom: 10px; margin-top: 20px;">Confirmar Asistencia</p>
@@ -363,22 +365,18 @@
         const musicBtn = document.getElementById('music-toggle');
         let isMusicPlaying = false;
         
-        // Ajustamos volumen para que no sea estruendoso al inicio
         music.volume = 0.5;
 
         function openEnvelope() {
             document.getElementById('envelope-overlay').classList.add('envelope-open');
             document.getElementById('invitation').classList.add('show-content');
-            
-            // REPRODUCIR MÚSICA AL ABRIR EL SOBRE
-            // Los navegadores permiten audio si viene de un evento de usuario (clic)
             playMusic();
         }
 
         function playMusic() {
             music.play().then(() => {
                 isMusicPlaying = true;
-                musicBtn.innerHTML = "🎵"; // Cambiar icono a 'Sonando'
+                musicBtn.innerHTML = "🎵";
             }).catch(error => {
                 console.log("No se pudo reproducir audio automáticamente:", error);
                 isMusicPlaying = false;
@@ -386,7 +384,6 @@
             });
         }
 
-        // CONTROLADOR DEL BOTÓN DE MÚSICA
         musicBtn.addEventListener('click', () => {
             if (isMusicPlaying) {
                 music.pause();
@@ -399,13 +396,11 @@
             }
         });
 
-        // CAMBIO DE TEMA
         const themeToggleButton = document.getElementById('theme-toggle');
         themeToggleButton.addEventListener('click', () => {
             document.body.classList.toggle('theme-lilac');
         });
 
-        // CUENTA REGRESIVA
         const targetDate = new Date("December 20, 2025 17:00:00").getTime();
         const timer = setInterval(function() {
             const now = new Date().getTime();
@@ -425,7 +420,6 @@
             document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
         }, 1000);
 
-        // GALERÍA
         let slideIndex = 1;
         showSlides(slideIndex);
         function plusSlides(n) { showSlides(slideIndex += n); }
