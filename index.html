@@ -24,7 +24,7 @@
             --btn-gift-bg: #e10098;
         }
 
-        /* --- TEMA ALTERNATIVO --- */
+        /* --- TEMA ALTERNATIVO (LILAC DREAM) --- */
         body.theme-lilac {
             --body-bg: #4B3853; 
             --papel-bg: #F4E8E8; 
@@ -52,7 +52,7 @@
             transition: background-color 0.5s ease;
         }
 
-        /* --- BOTONES FLOTANTES (TEMA Y MÚSICA) --- */
+        /* --- BOTONES FLOTANTES --- */
         .floating-btn {
             position: fixed; right: 20px; z-index: 10000;
             background: var(--papel-bg); border: 2px solid var(--dorado); color: var(--lila-oscuro-texto);
@@ -63,7 +63,7 @@
         .floating-btn:hover { transform: scale(1.1); }
 
         #theme-toggle { top: 20px; }
-        #music-toggle { top: 70px; } /* Justo debajo del botón de tema */
+        #music-toggle { top: 70px; }
 
         /* --- ESTILOS DEL SOBRE --- */
         #envelope-overlay {
@@ -341,7 +341,7 @@
                         <div class="deadline-box">
                             <div class="deadline-title">⚠️ Importante ⚠️</div>
                             <p style="font-size: 0.9rem; margin-bottom: 5px;">Para asegurar su lugar en el Banquete Real, favor de confirmar antes del:</p>
-                            <div class="deadline-date">10 de Diciembre</div>
+                            <div class="deadline-date">5 de Diciembre</div>
                         </div>
 
                         <p style="font-weight: bold; margin-bottom: 10px; margin-top: 20px;">Confirmar Asistencia</p>
@@ -362,27 +362,31 @@
         const music = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-toggle');
         let isMusicPlaying = false;
+        
+        // Ajustamos volumen para que no sea estruendoso al inicio
+        music.volume = 0.5;
 
         function openEnvelope() {
             document.getElementById('envelope-overlay').classList.add('envelope-open');
             document.getElementById('invitation').classList.add('show-content');
             
-            // Intentar reproducir música al abrir el sobre
+            // REPRODUCIR MÚSICA AL ABRIR EL SOBRE
+            // Los navegadores permiten audio si viene de un evento de usuario (clic)
             playMusic();
         }
 
         function playMusic() {
             music.play().then(() => {
                 isMusicPlaying = true;
-                musicBtn.innerHTML = "🎵"; // Icono de sonando
+                musicBtn.innerHTML = "🎵"; // Cambiar icono a 'Sonando'
             }).catch(error => {
-                console.log("Autoplay bloqueado por el navegador hasta interacción del usuario");
+                console.log("No se pudo reproducir audio automáticamente:", error);
                 isMusicPlaying = false;
-                musicBtn.innerHTML = "🔇"; // Icono de silencio
+                musicBtn.innerHTML = "🔇";
             });
         }
 
-        // CONTROLADOR DE MÚSICA
+        // CONTROLADOR DEL BOTÓN DE MÚSICA
         musicBtn.addEventListener('click', () => {
             if (isMusicPlaying) {
                 music.pause();
